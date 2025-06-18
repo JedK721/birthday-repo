@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy 16th Birthday, Qhayiya!</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20vh;
+      font-size: 4em;
+      color: #ff69b4;
+      animation: pop 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    .message {
+      text-align: center;
+      font-size: 2em;
+      color: #fff;
+      margin-top: 20px;
+      animation: fadeIn 3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      0% {opacity: 0;}
+      100% {opacity: 1;}
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎂 Happy 16th Birthday, Qhayiya! 🎉</h1>
+  <div class="message">
+    You’re officially 16 — time to celebrate YOU!<br/>
+    Wishing you a year full of laughter, growth, and epic memories. 🚀💖
+  </div>
+
+  <canvas id="confetti"></canvas>
+  
+  <audio autoplay loop>
+    <source src="your-birthday-song.mp3" type="audio/mp3">
+    <!-- Replace with a valid MP3 file path -->
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function createParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        size: Math.random() * 8 + 4,
+        speed: Math.random() * 3 + 1,
+        color: `hsl(${Math.random() * 360}, 70%, 60%)`
+      };
+    }
+
+    function updateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < 150; i++) {
+        if (!particles[i]) particles[i] = createParticle();
+
+        let p = particles[i];
+        p.y += p.speed;
+
+        if (p.y > canvas.height) {
+          particles[i] = createParticle();
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      }
+      requestAnimationFrame(updateParticles);
+    }
+
+    updateParticles();
+  </script>
+</body>
+</html>
